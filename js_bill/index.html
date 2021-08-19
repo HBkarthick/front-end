@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<style>
+		.fieldlist>input{
+			margin-left: 100px;
+			max-width: 40%;
+		}
+	</style>
+</head>
+<body>
+	<div class="fieldlist container " style="display:inline-flex;margin-top: 20px;">
+    <form class="form1" action="#" method="post" style="padding-left:10px">
+		    <div style="min-width:500px;max-width: 500px; border: solid 1px; padding-left:40px"class="container">		
+				<label for="simple-input"> Email </label> <br>
+				<input type="text" id="simple-input1" name="userid" class="k-textbox" style="width: 80%;"required/><br>
+	   		
+  				  <input type="checkbox" id="simple-input2" name="vehicle3"required>
+  					<label for="simple-input"> check you E-mail Id</label><br>
+    	
+ 				<label for="simple-input">first name</label><br>
+ 				<input id="simple-input3" name="pwd" type="text" class="k-textbox" style="width: 80%;" required/><br>
+        
+				<label for="simple-input"> last name </label> <br>
+				<input type="text" id="simple-input4" name="userid" class="k-textbox" style="width: 80%;"required/><br>
+	   	
+				<label for="simple-input"> Address</label> <br>
+				<input type="text" id="simple-input5" name="userid" class="k-textbox" style="width: 80%;"required/><br>
+	   		
+				<label for="simple-input">Apt,unit,suite(optional)</label> <br>
+				<input type="text" id="simple-input6" name="userid" class="k-textbox" style="width: 80%;" required/><br>
+	   
+				<label for="simple-input">city</label> <br>
+				<input type="text" id="simple-input7" name="userid" class="k-textbox" style="width: 80%;"required/><br>
+	   		
+				<label for="simple-input">Country</label> <br>
+				<input type="text" id="simple-input8" name="userid" class="k-textbox" style="width: 80%;"required/><br>
+	   	
+				<label for="simple-input">State</label> <br>
+				<input type="text" id="simple-input9" name="userid" class="k-textbox" style="width: 80%;"required/><br>
+	   	
+	   			<label for="simple-input">Zip code</label> <br>
+				<input type="number" id="simple-input10" name="zipcode" class="k-textbox" style="width: 80%;"required><br>
+
+				<input type="checkbox" id="vali" value="check number" required/> check your zip code<br>
+	   		
+				<input id="button" type="submit" />
+			
+		</div>
+	</form>
+<div>
+	<div class="container" style="display: inline-flex;">
+	<form id="my-form" style="border: solid 1px; padding:5px;padding-right:15px ;">
+	<div style="display:inline-flex;">
+	<label style="padding-right: 20px;"> No.Of.quantity :</label>
+	<div style=""><input id="my-input" type="number" placeholder="1" min="1" ; value="1"></div><b style="padding-left:12px;padding-right:10px ;">* 149 </b>=<p id="up">149</p></div><br>
+	<div style="display:inline-flex; padding-bottom: 10px;">Shipping Ammount:<div style="padding-left: 232px;">=     0</div></div><br>
+	<div style="display:inline-flex; padding-bottom: 10px">Sales Tax(0%):<div style="padding-left: 277px;">=   0</div></div><br>
+	<div style="display:inline-flex; padding-bottom: 10px">Total Aount:<div style="padding-left: 290px; display: inline-flex;">=<p id="up">149</p></div></div><br>
+	<div><button type="submit111">Pay Amount</button></div>
+	
+</form>
+</div></div>
+</div>
+
+ <script>
+	document.querySelector('form.form1').addEventListener('submit', function(e) {
+    //prevent the normal submission of the form
+    	e.preventDefault();
+		var sample={};
+    	sample.Email=document.getElementById('simple-input1').value;
+    	sample.check=document.getElementById('simple-input2').value;
+    	sample.firstname=document.getElementById('simple-input3').value;
+    	sample.last_name=document.getElementById('simple-input4').value;
+    	sample.Address=document.getElementById('simple-input5').value;
+    	sample.Apt_unit_suite=document.getElementById('simple-input6').value;
+    	sample.city=document.getElementById('simple-input7').value;
+    	sample.country=document.getElementById('simple-input8').value;
+    	sample.state=document.getElementById('simple-input9').value;
+    	sample.Zip_code=document.getElementById('simple-input10').value;
+    	console.log(sample)
+	});
+	$(document).ready(function(){
+		$("#vali").click(function(){
+			var inupyval=$("#simple-input10").val();
+			if (inupyval.length==6){
+				
+			}else{
+				alert("zip no is invalid");
+				$("#vali").prop('checked',false);
+
+			}
+		})
+	})
+	$(document).ready(function(){
+		$("#vali").click(function(){
+			var inupyval=$("#simple-input10").val();
+			if (inupyval>=0){
+				
+			}else{
+				alert("zip no is invalid");
+				$("#vali").prop('checked',false);
+
+			}
+		})
+	})
+	$(document).ready(function(){
+		$("#simple-input2").click(function(){
+			var inupyval=$("#simple-input1").val();
+			var validate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+			if (validate.test(inupyval)){
+				
+			}else{
+				alert("Email ID is invalid");
+				$("#simple-input2").prop('checked',false);
+
+			}
+		})
+	})
+
+// $(document).ready(function(){
+//   $(button).click(function(){
+//     $("#up").remove();
+//   });
+// });
+
+
+
+	$("#my-form").change(function(event){
+		event.preventDefault();
+		var textInput = $("#my-input").val();
+		var inum=parseInt(textInput);
+		var fi = inum*149;
+		var s=fi.toString();  
+		console.log(s);
+    	$("p").html(s);
+  });
+</script>
+</body>
+</html>

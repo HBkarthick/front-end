@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+    th{ 
+        color:#fff;
+            }
+</style>
+
+</head>
+<body>
+<form onsubmit="event.preventDefault();" id="uform">
+    <label>firstname</label>
+    <input type="text" name="first_name" id="first_name">
+    <label>lastname</label>
+    <input type="text" name="last_name" id="last_name">
+    <label>email</label>
+    <input type="text" name="email" id="email">
+    <button id="post_data">post data</button>
+    <button id="update_data" style="display:none">update data</button>
+</form>
+<button id="cleat_data">delete All data</button>
+
+
+
+<table class="table table-striped" id="product">
+    <tr  class="bg-info">
+        <th>First</th>
+        <th>Last</th>
+        <th>Email</th>
+        <th>id</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+    var myArray = []
+    get()
+    function get(){
+    $.ajax({
+        method:'GET',
+        url:'https://reqres.in/api/users',
+        success:function(response){
+            myArray = response.data
+            //console.log(myArray)
+            buildTable(myArray)
+        }
+    })
+
+}
+
+function buildTable(data){
+        var table = document.getElementById('myTable')
+        //data=String(data)
+        console.log(data);
+        console.log(typeof 'data')
+        for (var i = 0; i < data.length; i++){
+            var row = `<tr>
+                            <td>${data[i].first_name}</td>
+                            <td>${data[i].last_name}</td>
+                            <td>${data[i].email}</td>
+                            <td>${data[i].id}</td>
+                        <td>    <a onClick="onEdit(this)">Edit</a></td>
+                      <td> <a onClick="onDelete(this)">Delete</a></td>
+
+                      </tr>`
+
+            table.innerHTML += row
+            console.log(myArray.length)
+        }
+    }
+
+    $("#post_data").click(function(){
+     var data = new Object();
+              data.first_name = $("input[name='first_name']").val();
+              data.last_name = $("input[name='last_name']").val();
+              data.email = $("input[name='email']").val();
+              console.log(data.first_name,data.last_name,data.email);
+              $.ajax(
+                {
+                   type:'POST',
+                   url: 'https://reqres.in/api/users',
+                   data: JSON.stringify(data),
+                   contentType:'application/json',
+                   success:function(data){
+                     console.log("added succesfully");
+                     console.log(data.first_name)
+                        data= [data]
+                        myArray.push(data)
+                    console.log(myArray)
+                   buildTable(data)
+                   reset()
+                   },
+                   error:function(){
+                      console.log("error");
+                   }
+                }
+              );
+
+});
+
+
+
+
+    function onDelete(id){
+          console.log(id);
+           row = id.parentElement.parentElement;
+          var data = new Object();
+              data.id= row.cells[3].innerHTML;
+              //data=[data]
+             console.log(data);
+                     $.ajax(
+            {
+               type:'DELETE',
+               url: 'https://reqres.in/api/users/'+data.id,
+               success:function(data){
+                 //getAllPost();
+                
+                document.getElementById("product").deleteRow(row.rowIndex);
+                 console.log("Deleted succesfully");
+               },
+               error:function(){
+                  console.log("error");
+               }
+            }
+          );
+        }
+var e_id;
+
+
+function onEdit(data)
+        {
+            console.log(data)
+            row = data.parentElement.parentElement;
+            document.getElementById("first_name").value = row.cells[0].innerHTML;
+            document.getElementById("last_name").value = row.cells[1].innerHTML;
+            document.getElementById("email").value = row.cells[2].innerHTML;
+            e_id=  Number(row.cells[3].innerHTML);
+            console.log(typeof e_id)
+            $("#post_data").hide();
+            $("#update_data").show();
+
+           
+
+    }
+
+
+ $("#update_data").click(function(){
+  
+
+                var data = new Object();
+              data.first_name = $("input[name='first_name']").val();
+              data.last_name = $("input[name='last_name']").val();
+              data.email = $("input[name='email']").val();
+              data.id = e_id;             
+              $((row).children[0]).text(data.first_name)
+              $((row).children[1]).text(data.last_name)
+              $((row).children[2]).text(data.email)
+    
+
+            $.ajax(
+              {
+                 type:'PUT',
+                 url: 'https://reqres.in/api/users/'+e_id,
+                 data: JSON.stringify(data),
+                 contentType:'application/json',
+                 success:function(response){
+                    console.log(response)
+                   console.log("Updated succesfully");
+                   reset()
+                   $("#post_data").show();
+            $("#update_data").hide();
+                 },
+                 error:function(){
+                    console.log("error");
+                 }
+              }
+
+            );
+         });
+
+
+    $("#cleat_data").click(function(){
+        $('#myTable').empty();
+        myArray.length=0
+        
+    });
+
+function reset(){
+$("#uform")[0].reset();
+    }
+console.log(myArray)
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
